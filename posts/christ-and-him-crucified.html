@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christ and Him Crucified</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --ink: #1A1614;
+    --muted: #6B6460;
+    --accent: #8B3A2A;
+    --accent-light: #F5EDE9;
+    --border: #E2DCD6;
+    --gold: #B8924A;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tag {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  /* Body text */
+  p { margin-bottom: 1.5em; }
+
+  /* Section headings */
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 3em 0 1em;
+    padding-top: 2em;
+    border-top: 1px solid var(--border);
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 2.5em 0 1em;
+  }
+
+  /* Pull quotes */
+  .pullquote {
+    margin: 2.5em 0;
+    padding: 28px 36px;
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink);
+    text-align: center;
+  }
+
+  .pullquote .attribution {
+    display: block;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  /* Scripture hover */
+  .verse {
+    color: var(--accent);
+    font-style: italic;
+    cursor: help;
+    position: relative;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--accent);
+  }
+
+  .verse-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: #F5F0EB;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 14px 18px;
+    border-radius: 6px;
+    width: 300px;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+
+  .verse-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: var(--ink);
+  }
+
+  .verse-ref {
+    display: block;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #B0A898;
+    margin-top: 8px;
+  }
+
+  .verse:hover .verse-popup,
+  .verse:focus .verse-popup { display: block; }
+
+  /* Greek terms */
+  .greek {
+    font-style: italic;
+    color: var(--gold);
+    cursor: help;
+    position: relative;
+    border-bottom: 1px dotted var(--gold);
+  }
+
+  .greek-popup {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2C2218;
+    color: #F5EDD8;
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px 16px;
+    border-radius: 6px;
+    width: 240px;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .greek-popup .gk-word {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .greek-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 7px solid transparent;
+    border-top-color: #2C2218;
+  }
+
+  .greek:hover .greek-popup,
+  .greek:focus .greek-popup { display: block; }
+
+  /* Emphasized scripture block */
+  .scripture-block {
+    margin: 2.5em auto;
+    max-width: 560px;
+    padding: 24px 32px;
+    border: 1px solid var(--border);
+    background: white;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .scripture-block .ref {
+    display: block;
+    margin-top: 10px;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Emphasis inline */
+  strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* Closing */
+  .closing {
+    margin-top: 4em;
+    padding-top: 2.5em;
+    border-top: 1px solid var(--border);
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .verse-popup, .greek-popup { width: 220px; font-size: 12px; }
+    .pullquote { padding: 20px 24px; }
+  }
+</style>
+</head>
+<body>
+<article class="page">
+
+  <header class="header">
+    <span class="tag">1 Corinthians 2:2</span>
+    <h1>Christ and Him Crucified</h1>
+    <p class="subtitle">On the only message that has ever really mattered.</p>
+  </header>
+
+  <p>There is one phrase that has been at the center of Christian preaching for two thousand years. Not as a slogan. Not as a warm opener before you get to the real content. As the content.</p>
+
+  <p>Paul writes in <span class="verse" tabindex="0">1 Corinthians 2:2<span class="verse-popup">"For I decided to know nothing among you except Jesus Christ and him crucified."<span class="verse-ref">1 Corinthians 2:2 (ESV)</span></span></span>: <em>I decided to know nothing among you except Jesus Christ and him crucified.</em></p>
+
+  <p>That is the whole message. And if that feels too simple, I want to show you why you might be underestimating it.</p>
+
+  <h2>Why This Phrase Is the Gospel, Not Just a Summary of It</h2>
+
+  <p>Paul walks into Corinth. It is a city full of philosophers and intellectuals. People who loved Aristotle, debated stoicism, respected eloquence. They valued wisdom as a status symbol.</p>
+
+  <p>And Paul says: yeah, I'm not doing any of that.</p>
+
+  <p>He doesn't say it as a one-time thing either. This is not Paul having a bad week and simplifying his sermon. This is his consistent message everywhere he goes. <span class="verse" tabindex="0">Galatians 6:14<span class="verse-popup">"But far be it from me to boast except in the cross of our Lord Jesus Christ, by which the world has been crucified to me, and I to the world."<span class="verse-ref">Galatians 6:14 (ESV)</span></span></span>, <span class="verse" tabindex="0">Philippians 3:8<span class="verse-popup">"Indeed, I count everything as loss because of the surpassing worth of knowing Christ Jesus my Lord."<span class="verse-ref">Philippians 3:8 (ESV)</span></span></span>, <span class="verse" tabindex="0">Romans 1:16<span class="verse-popup">"For I am not ashamed of the gospel, for it is the power of God for salvation to everyone who believes, to the Jew first and also to the Greek."<span class="verse-ref">Romans 1:16 (ESV)</span></span></span>. Every city, every crowd, same thing. Christ and Him crucified.</p>
+
+  <p>Why? Because this is not a summary of the gospel before you get to something more advanced. This is the gospel. The whole thing.</p>
+
+  <div class="pullquote">
+    "The cross is the centre of the world's history. The incarnation of Christ and the crucifixion of our Lord are the pivot round which all the events of the ages revolve."
+    <span class="attribution">Alexander Maclaren</span>
+  </div>
+
+  <p>Everything hinges on two things: who Christ is, and what He did. That is exactly what this phrase gives you. So let's go there.</p>
+
+  <h2>Part 1 — Christ: Who He Is</h2>
+
+  <p>The word <em>Christ</em> is not just a name. It is a title. From the Greek <span class="greek" tabindex="0">Christos<span class="greek-popup"><span class="gk-word">Christos (Χριστός)</span>The Anointed One. Drawn from the Hebrew Mashiach. The one set apart by God for a specific mission.</span></span>, drawn from the Hebrew <em>Mashiach</em>, the Anointed One, the one set apart by God for a specific mission. Before we talk about what He did, we need to know who He is. Because everything He did depends on it.</p>
+
+  <h3>Fully God</h3>
+
+  <p>This is the aspect that almost every religion outside Christianity attacks. Islam, Jehovah's Witnesses, Mormonism. They will all tell you Jesus was great. A prophet. An exalted being. But not God.</p>
+
+  <p>Look at Hebrews 1. It says God spoke in these last days through His Son, <span class="verse" tabindex="0">appointed heir of all things, through whom He created the world<span class="verse-popup">"but in these last days he has spoken to us by his Son, whom he appointed the heir of all things, through whom also he created the world. He is the radiance of the glory of God and the exact imprint of his nature, and he upholds the universe by the word of his power."<span class="verse-ref">Hebrews 1:2-3 (ESV)</span></span></span>. He is the radiance of the glory of God and the <strong>exact imprint of his nature</strong>, upholding the universe by the word of His power.</p>
+
+  <p>Read that again. The exact imprint. Not a reflection of God, not a resemblance. The <em>exact imprint</em> of His nature.</p>
+
+  <p>And then, a few verses later, God the Father speaks directly to the Son. What does He call Him?</p>
+
+  <div class="scripture-block">
+    <span class="verse" tabindex="0"><strong>"Your throne, O God, is forever and ever."</strong><span class="verse-popup">"But of the Son he says, 'Your throne, O God, is forever and ever, the scepter of uprightness is the scepter of your kingdom.'"<span class="verse-ref">Hebrews 1:8 (ESV)</span></span></span>
+    <span class="ref">Hebrews 1:8 — The Father addressing the Son</span>
+  </div>
+
+  <p>The Father is calling the Son <em>God.</em> The Greek word used here is <span class="greek" tabindex="0">Theos<span class="greek-popup"><span class="gk-word">Theos (Θεός)</span>The standard Greek word for God used throughout the New Testament. The same word applied to God the Father. Not a lesser title.</span></span>, the same word used for God the Father throughout the New Testament. Not a lesser title. Not a figure of speech. The Father addresses the Son as God.</p>
+
+  <p>Not a partial God. Not a God-like man. Paul says in <span class="verse" tabindex="0">Colossians 2:9<span class="verse-popup">"For in him the whole fullness of deity dwells bodily."<span class="verse-ref">Colossians 2:9 (ESV)</span></span></span> that in Him the whole fullness of deity dwells bodily. The Greek word is <span class="greek" tabindex="0">pleroma<span class="greek-popup"><span class="gk-word">pleroma (πλήρωμα)</span>Fullness, totality. The complete sum of divine attributes and powers. Paul uses it to say nothing of God is held back from Christ.</span></span>. The fullness, the totality, all of it, contained in a human body.</p>
+
+  <p>And here is what gets me. God did not just send someone. <strong>He came.</strong> The Creator of the universe, the One who holds everything in existence by the word of His power, came down. He had every right to wipe us out from the moment of transgression, from the moment of Adam and Eve. He would have been perfectly just. Instead, He came. That is not a small thing.</p>
+
+  <h3>Fully Man</h3>
+
+  <p>This part gets less attention than it deserves. I know I grew up hearing about Jesus as God. But hearing about Jesus as <em>truly</em> man? Not as often.</p>
+
+  <p>He was one of us. Bone of our bone, flesh of our flesh. Real hunger. Real grief. Real sweat. Real tears at a tomb. He was deeply distressed in the garden (Mark 14:33). And Hebrews is direct about what this means for you:</p>
+
+  <div class="scripture-block">
+    <span class="verse" tabindex="0">"We do not have a high priest who is unable to sympathize with our weaknesses, but one who in every respect has been tempted as we are, yet without sin. Let us therefore with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."<span class="verse-popup">"For we do not have a high priest who is unable to sympathize with our weaknesses, but one who in every respect has been tempted as we are, yet without sin. Let us then with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."<span class="verse-ref">Hebrews 4:15-16 (ESV)</span></span></span>
+    <span class="ref">Hebrews 4:15-16 (ESV)</span>
+  </div>
+
+  <p>And this is not just a comforting detail. It is theologically necessary. <span class="verse" tabindex="0">Hebrews 2:17<span class="verse-popup">"Therefore he had to be made like his brothers in every respect, so that he might become a merciful and faithful high priest in the service of God, to make propitiation for the sins of the people."<span class="verse-ref">Hebrews 2:17 (ESV)</span></span></span> says He had to be made like His brothers in every respect, so that He might become a merciful and faithful high priest. He had to be one of us to represent us. To stand <em>as</em> us. To be the head of humanity the way Adam was, and succeed where Adam failed.</p>
+
+  <div class="pullquote">
+    "He became what we are so that he might make us what he is."
+    <span class="attribution">Athanasius of Alexandria</span>
+  </div>
+
+  <p>That brings us to the second part.</p>
+
+  <h2>Part 2 — Him Crucified: What He Did</h2>
+
+  <p>Some people like to split God into two versions. The Old Testament God who is strict, angry, full of wrath. And the New Testament God who is gentle and forgiving because Jesus comes and softens everything.</p>
+
+  <p>The cross destroys that completely.</p>
+
+  <p>Both are fully present at Calvary, simultaneously. God's love, mercy, and grace toward sinners. And God's wrath, justice, and hatred of sin toward Christ, who bore those sins. Both, fully, at the same time.</p>
+
+  <h3>The Cross Shows the Full Character of God</h3>
+
+  <p><span class="verse" tabindex="0">Romans 5:8<span class="verse-popup">"but God shows his love for us in that while we were still sinners, Christ died for us."<span class="verse-ref">Romans 5:8 (ESV)</span></span></span>: God demonstrates His own love for us in this, while we were still sinners, Christ died for us. This was not the Son convincing a reluctant Father. The Father, the Son, and the Spirit agreed on this from before the foundation of the world. <span class="verse" tabindex="0">Revelation 13:8<span class="verse-popup">"...the Lamb slain from the foundation of the world."<span class="verse-ref">Revelation 13:8 (KJV)</span></span></span> speaks of the Lamb slain from the foundation of the world. <span class="verse" tabindex="0">Ephesians 1:4<span class="verse-popup">"...even as he chose us in him before the foundation of the world, that we should be holy and blameless before him."<span class="verse-ref">Ephesians 1:4 (ESV)</span></span></span> says He chose us in Christ before the foundation of the world. This was the plan. All of God, loving you.</p>
+
+  <p>But God also says in <span class="verse" tabindex="0">Exodus 34:7<span class="verse-popup">"...keeping steadfast love for thousands, forgiving iniquity and transgression and sin, but who will by no means clear the guilty..."<span class="verse-ref">Exodus 34:7 (ESV)</span></span></span>: I show steadfast love, forgiving iniquity and transgression and sin, but by no means will I clear the guilty.</p>
+
+  <p>Both. He will forgive. And He will by no means ignore guilt.</p>
+
+  <p>Think about it this way. Imagine you come home and find your entire family murdered. The killer is caught. And then the judge says: I am a God of love, so I'm letting you go. That judge would not be just. Justice was never done. No one in that courtroom would call that mercy. They would call it corruption.</p>
+
+  <p>Our God is not that judge. He is just. And what justice demands, it receives. Every sin requires a death.</p>
+
+  <div class="scripture-block">
+    <span class="verse" tabindex="0">"It was the will of the LORD to crush him; he has put him to grief."<span class="verse-popup">"Yet it was the will of the LORD to crush him; he has put him to grief; when his soul makes an offering for guilt, he shall see his offspring; he shall prolong his days; the will of the LORD shall prosper in his hand."<span class="verse-ref">Isaiah 53:10 (ESV)</span></span></span>
+    <span class="ref">Isaiah 53:10 (ESV)</span>
+  </div>
+
+  <p>This was not an accident. This was not a tragedy God permitted reluctantly. God directed His wrath, purposefully and justly, onto His own Son. <span class="verse" tabindex="0">Romans 3:25<span class="verse-popup">"whom God put forward as a propitiation by his blood, to be received by faith. This was to show God's righteousness, because in his divine forbearance he had passed over former sins."<span class="verse-ref">Romans 3:25 (ESV)</span></span></span> says God put Christ forward as a <span class="greek" tabindex="0">hilasterion<span class="greek-popup"><span class="gk-word">hilasterion (ἱλαστήριον)</span>The mercy seat. The cover of the Ark of the Covenant where the high priest sprinkled blood on the Day of Atonement. The place where wrath was satisfied. Paul says Christ is that place.</span></span>, the mercy seat, the very place where wrath was satisfied.</p>
+
+  <p>God did not cancel His wrath. He did not delete sin and pretend it did not happen. He directed it, onto His own Son. What does that tell you about how seriously He takes sin? And what does it tell you about how much He loves you?</p>
+
+  <div class="pullquote">
+    "On the cross, God loved us enough to give his Son, and he was holy enough to punish sin in his Son."
+    <span class="attribution">John Stott</span>
+  </div>
+
+  <h3>Substitutionary Atonement: He Stood in Your Place</h3>
+
+  <p><span class="verse" tabindex="0">1 Timothy 2:6<span class="verse-popup">"who gave himself as a ransom for all, which is the testimony given at the proper time."<span class="verse-ref">1 Timothy 2:6 (ESV)</span></span></span> — Christ gave himself as a ransom, <span class="greek" tabindex="0">antilytron<span class="greek-popup"><span class="gk-word">antilytron (ἀντίλυτρον)</span>A ransom in place of another. The prefix anti means "instead of" or "in place of." Not just alongside, not merely with — but as a substitute.</span></span>, a ransom <em>in place of</em>. Not alongside you. Not with you. Instead of you.</p>
+
+  <p>Most people hear "Christ died for me" in a general sense. Like He died broadly for humanity and you happen to be included. But that is not what happened.</p>
+
+  <p>For every sin you have committed, and every sin you will commit, there is a punishment owed. Christ on the cross took every single one of those. Not a general death. Not blanket coverage. The exact punishment that was yours, He took personally. The radiance of His infinity is that He didn't drink a general cup of wrath. He drank yours.</p>
+
+  <div class="scripture-block">
+    <span class="verse" tabindex="0">"He was pierced for our transgressions; he was crushed for our iniquities."<span class="verse-popup">"But he was pierced for our transgressions; he was crushed for our iniquities; upon him was the chastisement that brought us peace, and with his wounds we are healed."<span class="verse-ref">Isaiah 53:5 (ESV)</span></span></span>
+    <span class="ref">Isaiah 53:5 (ESV)</span>
+  </div>
+
+  <p><span class="verse" tabindex="0">2 Corinthians 5:21<span class="verse-popup">"For our sake he made him to be sin who knew no sin, so that in him we might become the righteousness of God."<span class="verse-ref">2 Corinthians 5:21 (ESV)</span></span></span>: God made Him who knew no sin to be sin for us, so that in Him we might become the righteousness of God.</p>
+
+  <p>He was not sinful. He was and is and will always be sinless. But on the cross, He was <em>legally declared</em> as bearing the worst of sin, every charge, every verdict, every punishment. So that you could be <em>legally declared</em> righteous. Your sin moved to Him. His righteousness moved to you. That exchange is the gospel.</p>
+
+  <p>The forgiveness was accomplished on the cross. Not offered pending your response. Accomplished. When you place your faith in Christ, you are justified, declared righteous, not because you earned it, but because the verdict was already rendered. On Him.</p>
+
+  <p>So when someone says it is not fair for a bad person to go to heaven: the sins were not ignored. They were punished. On Christ. It is just that the punishment was not yours. That is not unfairness. That is mercy. You do not want fairness. If you want fairness, Christ would not have died.</p>
+
+  <h2>The Theological Point: This Is Enough</h2>
+
+  <p>Paul is not saying <em>Christ and Him crucified</em> as an opener before he gets to deeper content. He is saying this <em>is</em> the content. Complete. Sufficient. Nothing to add.</p>
+
+  <p><span class="verse" tabindex="0">1 Corinthians 1:30<span class="verse-popup">"And because of him you are in Christ Jesus, who became to us wisdom from God, righteousness and sanctification and redemption."<span class="verse-ref">1 Corinthians 1:30 (ESV)</span></span></span>: Christ became for us wisdom from God, and righteousness and sanctification and redemption. All of it. In Him.</p>
+
+  <p>You do not need another layer of wisdom, another framework, another upgrade on top of the gospel. The cross is not the beginning of something better. The cross <em>is</em> the good stuff.</p>
+
+  <div class="pullquote">
+    "I have a great need for Christ; I have a great Christ for my need."
+    <span class="attribution">Charles Spurgeon</span>
+  </div>
+
+  <h2>What Do You Do With This?</h2>
+
+  <p>I know this kind of topic can feel hard to translate into something practical. But here I think it is actually clear.</p>
+
+  <p>The message is Christ and Him crucified. Not Christ, you, and Him, and you crucified together. <strong>The work is done.</strong> He stood in your place. That is settled.</p>
+
+  <p>So what does that call you to? Not obligation. Not transaction. It calls you to something simpler and harder: <strong>gratitude that changes how you live.</strong></p>
+
+  <p>You cannot repay this. Give eternity times eternity and you still cannot match it. So stop trying to balance the ledger. The practical takeaway is not a checklist. It is a posture. Live from gratitude. Let that truth reshape how you spend your time, how you treat people, how you pray, what you pursue. The way you live your life should reflect this truth.</p>
+
+  <p>And in your suffering, come to Him. Hebrews does not just tell you Christ sympathizes with your weakness as a theological fact. It tells you what to <em>do</em> with that:</p>
+
+  <div class="scripture-block">
+    <span class="verse" tabindex="0">"Let us therefore with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."<span class="verse-popup">"Let us then with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."<span class="verse-ref">Hebrews 4:16 (ESV)</span></span></span>
+    <span class="ref">Hebrews 4:16 (ESV)</span>
+  </div>
+
+  <p>He is not distant from your pain. He knows what it feels like. Come to Him. And rest in this: if you are truly in Christ, nothing can separate you from His love. <span class="verse" tabindex="0">Romans 8:38-39<span class="verse-popup">"For I am sure that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor powers, nor height nor depth, nor anything else in all creation, will be able to separate us from the love of God in Christ Jesus our Lord."<span class="verse-ref">Romans 8:38-39 (ESV)</span></span></span>. He loved you enough to die for you. He rose to secure you. What do you think you could do to undo that?</p>
+
+  <div class="closing">
+    <p>The message is still the same as it was when Paul walked into Corinth.</p>
+    <p>Christ and Him crucified.</p>
+    <p>It was enough then. It is enough now.</p>
+    <p style="margin-top: 1.5em; font-style: normal; font-family: var(--sans); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);">May the peace and love of God our Father and the Lord Jesus Christ be with you.</p>
+  </div>
+
+</article>
+</body>
+</html>
