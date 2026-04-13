@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prone to Wander</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #141414;
+      --faint: #222220;
+      --text: #e8e4dc;
+      --muted: #7a7670;
+      --accent: #c8b89a;
+      --accent2: #8a7a66;
+      --serif: 'EB Garamond', Georgia, serif;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --mono: 'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 18px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(13,13,13,0.94); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--faint);
+    }
+    .nav-brand { font-family: var(--display); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.08em; color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 2.5rem 5rem; max-width: 780px; margin: 0 auto;
+    }
+    .hero-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .hero-title { font-family: var(--display); font-size: clamp(3.5rem, 9vw, 6.5rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 2rem; }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-divider { width: 48px; height: 1px; background: var(--accent2); margin-bottom: 2rem; }
+    .hero-sub { font-size: 1rem; color: var(--muted); max-width: 440px; line-height: 1.75; font-style: italic; }
+
+    .posts-section { max-width: 780px; margin: 0 auto; padding: 0 2.5rem 8rem; }
+    .section-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 3rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--faint); }
+
+    .post-list { list-style: none; }
+    .post-item { border-bottom: 1px solid var(--faint); padding: 2.75rem 0; display: grid; grid-template-columns: 72px 1fr; gap: 0 2rem; }
+    .post-item:first-child { padding-top: 0; }
+    .post-date { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em; color: var(--muted); padding-top: 0.3rem; line-height: 1.7; }
+    .post-tag { font-family: var(--mono); font-size: 0.54rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.6rem; }
+    .post-title { font-family: var(--display); font-size: 1.7rem; font-weight: 400; line-height: 1.2; color: var(--text); margin-bottom: 0.75rem; transition: color 0.25s; }
+    .post-item:hover .post-title { color: var(--accent); }
+    .post-excerpt { font-size: 0.9rem; color: var(--muted); line-height: 1.75; font-style: italic; }
+    .post-read { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent2); margin-top: 1.1rem; }
+    .post-read::after { content: '→'; transition: transform 0.2s; display: inline-block; }
+    .post-item:hover .post-read::after { transform: translateX(5px); }
+
+    .about-section { max-width: 780px; margin: 0 auto; padding: 5rem 2.5rem 8rem; border-top: 1px solid var(--faint); }
+    .about-inner { display: grid; grid-template-columns: 72px 1fr; gap: 0 2rem; }
+    .about-body { font-size: 0.98rem; color: var(--muted); line-height: 1.85; }
+    .about-body p + p { margin-top: 1rem; }
+
+    footer { text-align: center; padding: 3rem 2.5rem; border-top: 1px solid var(--faint); font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--muted); }
+    footer span { color: var(--accent2); }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      .hero { padding: 6.5rem 1.25rem 3.5rem; }
+      .posts-section, .about-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .post-item, .about-inner { grid-template-columns: 1fr; gap: 0.4rem; }
+      .post-date { padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">Prone to Wander</a>
+  <ul class="nav-links">
+    <li><a href="#posts">Writing</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="hero-label">Theology &amp; reflection</p>
+  <h1 class="hero-title">Prone<br>to <em>Wander</em></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Thinking out loud about Scripture, grace, and what it means to be held by a God who does not let go.</p>
+</section>
+
+<section class="posts-section" id="posts">
+  <p class="section-label">Essays &amp; Reflections</p>
+  <ul class="post-list">
+
+    <li class="post-item">
+      <div>
+        <a href="posts/romans-9.html">
+          <p class="post-date">Apr<br>2026</p>
+        </a>
+      </div>
+      <div>
+        <p class="post-tag">Exegesis</p>
+        <a href="posts/romans-9.html"><h2 class="post-title">Has God's Word Failed?</h2></a>
+        <p class="post-excerpt">Romans 9 answers one question. The most explosive question the early church ever faced. This is my humble attempt at an exegesis.</p>
+        <a href="posts/romans-9.html" class="post-read">Read essay</a>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="section-label" style="margin-bottom:0; padding-bottom:0; border:none;">About</p>
+    <div class="about-body">
+      <p>I am Ong Khoi Nguyen. Some of you might know me as Chip, some of you as Brett. I am Vietnamese, born and raised in Da Nang, and currently based in the Netherlands.</p>
+      <p>I grew up in an evangelical church in Vietnam. My faith is not a story of a sudden 90-degree turn. It was gradual, a slow transformation that God worked in me over years, and it was really when I moved to the Netherlands that I truly found what it means to be a Christian. I cannot pinpoint the exact moment, but I know it happened.</p>
+      <p>What I find most compelling is learning who God actually is. People often think theology is for missionaries, church workers, or seminary students. But theology simply means the knowledge of God. Theo is God, logos is to know. And without knowing who God is, you cannot properly worship Him, because theology and doxology go hand in hand. Those who worship God must worship in spirit and in truth.</p>
+      <p>Where I come from, theology was simple and minimal. I understand why, but I do not think it should stay that way. This blog is my attempt to bring theology to you through the lens of the church fathers and preachers throughout history, but most importantly, sola scriptura. Everything grounded in Scripture alone. I want to make it accessible, not overwhelming.</p>
+      <p>The name comes from Come Thou Fount. "Prone to wander, Lord I feel it." That line resonates with me more than any other. It felt like the honest place to start.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Prone to Wander</span> &nbsp;&middot;&nbsp; Soli Deo Gloria
+</footer>
+
+</body>
+</html>
