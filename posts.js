@@ -1,6 +1,6 @@
 const POSTS = [
   {
-    slug: "posts/christ_blog_fixed_styles.html",
+    slug: "posts/christ-and-him-crucified.html",
     tag: "Article",
     title: "Christ and Him Crucified",
     excerpt: "There is one phrase at the center of Christian preaching for two thousand years. Not as a slogan. As the content.",
