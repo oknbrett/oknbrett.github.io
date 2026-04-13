@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Has God's Word Failed? — Prone to Wander</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Mono:wght@400;700&family=Noto+Serif+KR:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d; --faint: #222220; --text: #e8e4dc; --muted: #7a7670;
+      --accent: #c8b89a; --accent2: #8a7a66; --red: #C42026;
+      --serif: 'EB Garamond', Georgia, serif;
+      --serif-kr: 'Noto Serif KR', 'EB Garamond', Georgia, serif;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --mono: 'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--serif); font-size: 19px; line-height: 1.85; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    #progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent2); width: 0%; z-index: 200; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 2.5rem; background: rgba(13,13,13,0.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--faint); }
+    .nav-brand { font-family: var(--display); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.08em; color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-back { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+    .nav-back::before { content: '← '; }
+    .lang-toggle { display: flex; border: 1px solid var(--faint); border-radius: 4px; overflow: hidden; }
+    .lang-btn { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.7rem; cursor: pointer; border: none; background: transparent; color: var(--muted); transition: background 0.15s, color 0.15s; }
+    .lang-btn.active { background: var(--accent2); color: var(--bg); }
+    .lang-btn:hover:not(.active) { background: var(--faint); color: var(--accent); }
+    .post-wrap { max-width: 640px; margin: 0 auto; padding: 9rem 2.5rem 8rem; }
+    .post-tag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent2); margin-bottom: 1rem; }
+    .post-title { font-family: var(--display); font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; color: var(--text); margin-bottom: 1rem; }
+    .post-subtitle { font-size: 1rem; font-style: italic; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.6; }
+    .post-byline { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--muted); }
+    .post-divider { width: 40px; height: 1px; background: var(--accent2); margin: 2.5rem 0; }
+    .post-body { display: none; }
+    .post-body.active { display: block; }
+    .post-body p { margin-bottom: 1.6rem; }
+    .post-body em { font-style: italic; color: var(--accent); }
+    .post-body h2 { font-family: var(--mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--red); margin: 3.5rem 0 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(196,32,38,0.2); }
+    .stars { text-align: center; margin: 3rem 0; color: var(--accent2); font-size: 0.8rem; letter-spacing: 0.5em; }
+    .pullquote { text-align: center; padding: 2.5rem 1rem; margin: 3rem 0; border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint); }
+    .pullquote p { font-family: var(--display); font-size: 1.5rem; font-weight: 300; font-style: italic; color: var(--accent); line-height: 1.45; margin: 0; }
+    .pullquote cite { display: block; font-style: normal; font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent2); margin-top: 0.75rem; }
+    .vr { color: var(--red); font-weight: 600; cursor: pointer; border-bottom: 1px dotted var(--red); }
+    .vr-tip { display: none; position: absolute; background: #1a1a1a; color: #e8e0d4; padding: 14px 18px; border-radius: 4px; font-size: 14px; line-height: 1.65; font-family: var(--serif); font-style: italic; max-width: 320px; width: 90vw; border: 1px solid rgba(196,32,38,0.3); box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; }
+    .vr-tip-ref { display: block; font-style: normal; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 8px; }
+    .post-footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--faint); }
+    .sdg { font-family: var(--display); font-size: 1rem; font-style: italic; color: var(--muted); }
+    .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent2); margin-top: 2rem; }
+    .back-link:hover { color: var(--accent); }
+    .lang-kr { font-family: var(--serif-kr); }
+    @media (max-width: 600px) { nav { padding: 1rem 1.25rem; } .post-wrap { padding: 7rem 1.25rem 5rem; } .nav-right { gap: 1rem; } }
+  </style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tip" class="vr-tip" style="position:fixed;"><span class="vr-tip-ref" id="tip-ref"></span><span id="tip-text"></span></div>
+
+<nav>
+  <a href="../index.html" class="nav-brand">Prone to Wander</a>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')" id="btn-en">EN</button>
+      <button class="lang-btn" onclick="setLang('kr')" id="btn-kr">KR</button>
+    </div>
+    <a href="../index.html" class="nav-back">All posts</a>
+  </div>
+</nav>
+
+<div class="post-wrap">
+  <header style="margin-bottom:3rem;">
+    <p class="post-tag" id="tag-en">Exegesis &middot; Romans 9</p>
+    <p class="post-tag" id="tag-kr" style="display:none;">성경 해설 &middot; 로마서 9장</p>
+    <h1 class="post-title" id="title-en">Has God's Word Failed?</h1>
+    <h1 class="post-title" id="title-kr" style="display:none;">하나님의 말씀이 실패했는가?</h1>
+    <p class="post-subtitle" id="sub-en">This is my humble attempt to provide an exegesis of Romans 9.</p>
+    <p class="post-subtitle lang-kr" id="sub-kr" style="display:none;">로마서 9장에 대한 저의 작은 해설입니다.</p>
+    <p class="post-byline">Brett &middot; April 2026 &middot; 12 min read</p>
+  </header>
+  <div class="post-divider"></div>
+
+  <!-- ENGLISH -->
+  <div class="post-body active" id="body-en">
+    <p>Romans 9 answers one question. It is the most explosive question the early church ever faced.</p>
+    <p><em>If Israel mostly rejected Christ, has God's word failed?</em></p>
+    <p>In the New Testament era, Jewish Christians were an incredibly small minority. The majority of Jews remained in Judaism. So the question is real and serious: if Christ is the true Messianic King, and God promised to save Israel, why did so few of Israel believe? Does that mean Christ is false? Or does it mean God's word actually failed?</p>
+    <p>Paul's answer is neither. God never promised salvation to every ethnic Israelite. He has always worked through sovereign, unconditional election. This is not something Paul invented. It is God's character, revealed from Abraham to Moses to Pharaoh to the prophets, all the way into the New Testament.</p>
+    <div class="pullquote"><p>"But it is not as though the word of God has failed. For not all who are descended from Israel belong to Israel."</p><cite><span class="vr" data-ref="Rom 9:6">Romans 9:6</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>Paul's Grief &middot; vv. 1-5</h2>
+    <p>Paul does not begin with theology. He begins with grief. Raw grief. He says he could wish himself accursed, cut off from Christ, for the sake of his kinsmen (<span class="vr" data-ref="Rom 9:1-3">vv. 1-3</span>). This is not rhetoric. This is a man who is about to say something hard, and he wants you to know he is not saying it from a cold distance. What follows is pastoral, not detached.</p>
+    <p>He lists the privileges of Israel: the adoption, the glory, the covenants, the law, the worship, the promises, the patriarchs, and from them according to the flesh, the Messiah (<span class="vr" data-ref="Rom 9:4-5">vv. 4-5</span>). He closes by declaring Christ as God over all. A direct Christological statement. And then he turns to the question.</p>
+    <div class="stars">* * *</div>
+
+    <h2>The True Israel within Israel &middot; vv. 6-13</h2>
+    <p>Verse 6 is the hinge of the whole chapter. God's promises never applied to ethnic Israel as a whole. There has always been an election within the election.</p>
+    <p>First case: Abraham's seed (<span class="vr" data-ref="Rom 9:7-9">vv. 7-9</span>). Not all of Abraham's biological children are "the seed." Isaac, not Ishmael. The promise creates the line: not biology.</p>
+    <p>Second case: Jacob and Esau (<span class="vr" data-ref="Rom 9:10-13">vv. 10-13</span>). Paul deliberately picks the hardest example. Same father, same mother, same womb, same moment. Before they were born. Before either of them had done anything good or bad. And God chose Jacob.</p>
+    <p>Paul's point lands with full force in the phrase from verse 12: <em>"not because of works but because of him who calls."</em> Election precedes foreseen merit. God did not choose Jacob because He foresaw that Jacob would love Him more than Esau. God chose Jacob, and that is why Jacob loved Him. He quotes Malachi 1:2-3: "Jacob I loved, but Esau I hated." The word "hated" means covenantal non-election. But don't soften it too much. The entire argument depends on its unconditional force.</p>
+    <div class="pullquote"><p>"Though they were not yet born and had done nothing either good or bad, in order that God's purpose of election might continue, not because of works but because of him who calls."</p><cite><span class="vr" data-ref="Rom 9:10-13">Romans 9:11-12</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>First Objection: Is God Unjust? &middot; vv. 14-18</h2>
+    <p>Paul anticipates the obvious reaction (<span class="vr" data-ref="Rom 9:14">v. 14</span>). If God chooses before any works, is that fair?</p>
+    <p>Watch how Paul responds. He does not say, "Let me explain how this is fair by your standard." He does not go to the human level and argue from there. His answer is <span class="vr" data-ref="Ex 33:19">Exodus 33:19</span>:</p>
+    <div class="pullquote"><p>"I will have mercy on whom I have mercy, and I will have compassion on whom I have compassion."</p><cite><span class="vr" data-ref="Ex 33:19">Exodus 33:19</span> (ESV)</cite></div>
+    <p>God's freedom to show mercy is itself the ground of justice. By definition, mercy is not owed. If it is owed, it is wages, something you earned. But this is mercy. <span class="vr" data-ref="Rom 9:16">Verse 16</span> says it as plainly as language allows: "So then it depends not on human will or exertion, but on God, who has mercy."</p>
+    <p>Then Pharaoh (<span class="vr" data-ref="Rom 9:17-18">vv. 17-18</span>). God raised him up for this very purpose: to display His power. Conclusion: "He has mercy on whomever He wills, and He hardens whomever He wills." God is the active subject of the hardening.</p>
+    <div class="stars">* * *</div>
+
+    <h2>Second Objection: Why Does He Still Find Fault? &middot; vv. 19-23</h2>
+    <p>This is the crucial one. This objection (<span class="vr" data-ref="Rom 9:19">v. 19</span>) only arises if Paul is teaching exactly what Reformed theology says he is.</p>
+    <p>Think about this carefully. If Paul meant that God foresees your faith and chooses you based on it, if that had been his position, nobody would ask "why does He still find fault?" That question makes no sense against that framework. The objection only makes sense against unconditional election and sovereign hardening. The very existence of the objection proves what Paul is actually saying.</p>
+    <p>And I want to be clear: this is not something I invented. Neither did Paul, nor Calvin, nor Spurgeon, nor Edwards, nor MacArthur, nor Washer. Paul is reading the Old Testament out loud. Romans 9 itself is an interpretation of Exodus 33 and the other verses he quotes throughout. This is God's character in Scripture.</p>
+    <p>Paul's response in <span class="vr" data-ref="Rom 9:20-21">verses 20-21</span> draws from <span class="vr" data-ref="Isa 29:16">Isaiah 29:16</span> and <span class="vr" data-ref="Jer 18:6">Jeremiah 18</span>: the potter and clay. <em>"But who are you, O man, to answer back to God?"</em> This is not anti-intellectual. Paul is establishing creaturely position. The creature does not have standing to challenge the Creator's purposes. You are clay. You do not have the grounds.</p>
+    <div class="pullquote"><p>"But who are you, O man, to answer back to God? Will what is molded say to its molder, 'Why have you made me like this?'"</p><cite><span class="vr" data-ref="Rom 9:20-21">Romans 9:20</span> (ESV)</cite></div>
+    <p><span class="vr" data-ref="Rom 9:22-23">Verses 22-23</span> are where it opens up. From the same lump, God makes some vessels for honorable use and some for dishonorable use. Through some He will display His mercy. Through others, His justice. His plan, His right.</p>
+    <p>Does this make God sound unjust? Consider this: God had every right to make all of us vessels of wrath. He owes no one mercy. If He showed mercy to one single person in all of human history, that would already be more than He was obligated to give.</p>
+    <div class="stars">* * *</div>
+
+    <h2>Don't Ask for Fairness</h2>
+    <p>The repeated theme of Romans 9 is: "Is it fair? Is it fair? Is it fair?"</p>
+    <p>Paul's answer is: you do not want fairness. If God gave every human being exactly what they deserved, if He were purely fair, every single person in human history would go to hell. That is what fairness does, because God is just and we are sinners. Where do sinners go before a righteous judge? That is fairness.</p>
+    <p>Mercy is not about fairness. You did not earn it. God does not owe it.</p>
+    <p>And the cross is the clearest picture of this. Where is fairness at the cross? Christ did not deserve to die. You did not deserve to live. What is shown on the cross is mercy, mercy, mercy, and at the same time, justice. It could not just be mercy, because God is just. Sin had to be atoned for. So Christ died in our place. That is not fairness. That is something infinitely better.</p>
+    <div class="pullquote"><p>"If the Lord of hosts had not left us offspring, we would have been like Sodom and become like Gomorrah."</p><cite><span class="vr" data-ref="Rom 9:29">Isaiah 1:9 / Romans 9:29</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>Scriptural Confirmation &middot; vv. 24-29</h2>
+    <p>Paul grounds everything in the Old Testament. He quotes <span class="vr" data-ref="Hos 2:23">Hosea 2:23</span> and <span class="vr" data-ref="Hos 1:10">1:10</span>: those who were not God's people become "sons of the living God." Gentile inclusion. This has been the pattern from the beginning: God's plan of salvation was never exclusively for ethnic Jews. It was always for the whole world.</p>
+    <p>He quotes <span class="vr" data-ref="Isa 10:22-23">Isaiah 10:22-23</span>: only a remnant of Israel will be saved (<span class="vr" data-ref="Rom 9:27-28">vv. 27-28</span>). And then <span class="vr" data-ref="Isa 1:9">Isaiah 1:9</span> in <span class="vr" data-ref="Rom 9:29">verse 29</span>: <em>"If the Lord of hosts had not left us offspring, we would have been like Sodom and become like Gomorrah."</em></p>
+    <p>That is fairness. Right there. If God had given Israel exactly what they deserved, Israel would be gone, completely destroyed, like Sodom and Gomorrah. The fact that any of them remain is purely mercy. You do not want fairness. You want mercy.</p>
+    <div class="stars">* * *</div>
+
+    <h2>Israel's Stumble &middot; vv. 30-33</h2>
+    <p>Paul closes by diagnosing Israel's failure (<span class="vr" data-ref="Rom 9:30-33">vv. 30-33</span>). The Gentiles obtained righteousness: by faith. Israel pursued righteousness, by works of the law, and stumbled. The stumbling stone is Christ.</p>
+    <p>He quotes <span class="vr" data-ref="Isa 28:16">Isaiah 28:16</span> and <span class="vr" data-ref="Isa 8:14">8:14</span>. By works of the law, no one is saved. By faith, through grace, in Christ: that is how you are saved.</p>
+    <p>This is where Paul shifts to human responsibility. And I don't think he is contradicting himself. Human responsibility and God's sovereign election are not opposing truths. They are two layers of the same reality, two sides of the same coin. God ordains both the ends and the means. The means include genuine human choices, for which people are genuinely accountable. It is not robotic. Everyone is held accountable for their own response.</p>
+    <div class="stars">* * *</div>
+
+    <h2>Looking Forward &middot; Romans 10-11</h2>
+    <p>Romans 9 does not stand alone. It flows into chapter 10: human responsibility, the universal offer of the gospel, and chapter 11: future hope for Israel. You cannot isolate chapter 9 from 10 and 11. But you also cannot use 10 and 11 to neutralize or throw away what chapter 9 clearly teaches. Both are true. All three chapters together.</p>
+    <div class="stars">* * *</div>
+
+    <h2>A Personal Word</h2>
+    <p>I grew up in a Vietnamese church. The message was simple: you choose God. God gives you a chance, He invites you, but you have to be the one to accept. You have the final say. "Invite God into your heart." That made me the one who decides. The one with the final cause.</p>
+    <p>Coming to God and submitting to Him is not wrong on its own. But the sequence was wrong. It made me the determining factor. It made my choice the decisive thing.</p>
+    <p>Then I read <span class="vr" data-ref="Eph 1:4-5">Ephesians 1</span>. God chose people before the foundation of the world. That was new to me. And my first reaction was the same one Paul anticipates: this isn't fair. If God chose, then the people He didn't choose never had a chance.</p>
+    <p>But I kept reading. And I reached Romans 9. This is the chapter that settled it for me.</p>
+    <div class="stars">* * *</div>
+
+    <h2>What Do You Do with This?</h2>
+    <p>Every morning I wake up with gratitude I cannot exhaust.</p>
+    <p>Not because I did something. Not because I made the right choice or earned my place. Purely because God, in His mercy, chose me. Out of all people, He had mercy on me. I cannot fully understand it. I cannot get to the bottom of it. But He chose me. And that is what I know. That is what I love.</p>
+    <p>If you are a Christian, be grateful. Not the surface kind. The deep, unshakeable kind. The kind that comes from knowing it was not you.</p>
+    <p>Because God chose you, you can stand on this:</p>
+    <div class="pullquote"><p>"He who began a good work in you will bring it to completion at the day of Jesus Christ."</p><cite><span class="vr" data-ref="Phil 1:6">Philippians 1:6</span> (ESV)</cite></div>
+    <p>He started it. He will finish it. That is a promise.</p>
+    <p>Go back to Romans 8 and read it from bottom to top. God loved you, and <span class="vr" data-ref="Rom 8:38-39">nothing in all creation can separate you from that love</span>. <span class="vr" data-ref="Rom 8:31">God is for you, who can stand against you?</span> <span class="vr" data-ref="Rom 8:33">Who will bring a charge against God's elect?</span></p>
+    <p>He predestined you, called you, justified you, glorified you (<span class="vr" data-ref="Rom 8:29-30">Rom 8:29-30</span>). Past tense. Already done in the mind of God. Because of that great love, <span class="vr" data-ref="Rom 8:28">all things work together for good</span> for those who love Him.</p>
+    <p>That is the foundation. Not a fragile hope that depends on how tightly you hold on. A firm, immovable foundation, because God is sovereign. He cannot fail. He will not fail you. If He saves you, He saves you to the end.</p>
+    <p>And that, my friend, is the greatest comfort I have ever known.</p>
+  </div>
+
+  <!-- KOREAN -->
+  <div class="post-body lang-kr" id="body-kr">
+    <p>로마서 9장은 하나의 질문에 답한다. 초대교회가 마주한 가장 폭발적인 질문이다. <em>이스라엘 대부분이 그리스도를 거부했는데, 하나님의 말씀이 실패한 것인가?</em></p>
+    <p>신약 시대에 유대인 그리스도인은 극소수였다. 대다수는 유대교에 남아 있었다. 그리스도가 진정한 메시아이고, 하나님이 이스라엘을 구원하겠다고 약속하셨다면, 왜 이렇게 적은 수만 믿었는가? 그리스도가 거짓이거나, 하나님의 말씀이 실패한 것인가?</p>
+    <p>바울의 대답은 둘 다 아니다. 하나님은 모든 혈통적 이스라엘에게 구원을 약속한 적이 없다. 항상 주권적이고 무조건적인 선택을 통해 일하셨다. 이것은 바울이 발명한 것이 아니다. 아브라함부터 모세부터 바로부터 선지자들까지 나타난 하나님의 성품이다.</p>
+    <div class="pullquote"><p>"하나님의 말씀이 폐하여진 것 같지 않도다. 이스라엘에게서 난 그들이 다 이스라엘이 아니요."</p><cite><span class="vr" data-ref="Rom 9:6">로마서 9:6</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>바울의 통곡 &middot; 1-5절</h2>
+    <p>바울은 신학으로 시작하지 않는다. 슬픔으로 시작한다. 날것의 슬픔이다. 자기 형제들을 위해 자신이 저주를 받아 그리스도에게서 끊어질지라도 원한다고 했다 (<span class="vr" data-ref="Rom 9:1-3">1-3절</span>). 가상의 말이 아니다. 앞으로 나올 내용이 차가운 신학이 아니라 목회적인 것임을 보여준다.</p>
+    <p>이스라엘의 언약 특권을 나열한다: 양자의 영광, 언약들, 율법, 예배, 약속, 조상들, 그리고 육신으로는 메시아 (<span class="vr" data-ref="Rom 9:4-5">4-5절</span>). 그리스도를 만물 위에 계신 하나님으로 선언하며 마무리한다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>이스라엘 안의 진정한 이스라엘 &middot; 6-13절</h2>
+    <p><span class="vr" data-ref="Rom 9:6">6절</span>이 이 장의 논지다. 하나님의 약속은 혈통적 이스라엘 전체에 적용된 적이 없다. 항상 선택 안에 선택이 있었다.</p>
+    <p>첫째 사례: 아브라함의 씨 (<span class="vr" data-ref="Rom 9:7-9">7-9절</span>). 이삭이지, 이스마엘이 아니다. 약속이 계보를 만든다. 혈통이 아니다.</p>
+    <p>둘째: 야곱과 에서 (<span class="vr" data-ref="Rom 9:10-13">10-13절</span>). 같은 아버지, 같은 어머니, 같은 태, 같은 순간. 태어나기 전. 어떤 행위 전. 하나님이 야곱을 선택하셨다. 바울은 의도적으로 가장 어려운 사례를 골랐다.</p>
+    <p><span class="vr" data-ref="Rom 9:12">12절</span>의 문구에서 논점이 완전히 드러난다: <em>"행위로 말미암지 않고 오직 부르시는 이로 말미암아."</em> 선택은 예견된 공로에 앞선다. 하나님이 야곱을 선택하셨기에 야곱이 하나님을 사랑한 것이다. <span class="vr" data-ref="Mal 1:2-3">말라기 1:2-3</span>을 인용한다: "내가 야곱은 사랑하고 에서는 미워하였다." "미워하다"는 언약적 비선택을 뜻한다. 너무 부드럽게 해석하면 안 된다. 논증 전체가 이 무조건성에 달려 있다.</p>
+    <div class="pullquote"><p>"그 자식들이 아직 나지도 아니하고 무슨 선이나 악을 행하지 아니한 때에, 하나님의 뜻대로 되는 선택을 위하여 행위로 말미암지 않고 오직 부르시는 이로 말미암아."</p><cite><span class="vr" data-ref="Rom 9:10-13">로마서 9:11-12</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>첫 번째 반론: 하나님이 불의하신가? &middot; 14-18절</h2>
+    <p>바울은 당연한 반박을 예상한다 (<span class="vr" data-ref="Rom 9:14">14절</span>). 하나님이 행위 전에 선택하신다면, 공평한가?</p>
+    <p>바울이 어떻게 대답하는지 보라. "인간의 기준으로 설명해 드리겠다"고 하지 않는다. 그의 대답은 <span class="vr" data-ref="Ex 33:19">출애굽기 33:19</span>이다:</p>
+    <div class="pullquote"><p>"내가 긍휼히 여길 자를 긍휼히 여기고 불쌍히 여길 자를 불쌍히 여기리라."</p><cite><span class="vr" data-ref="Ex 33:19">출애굽기 33:19</span> (ESV)</cite></div>
+    <p>자비를 베푸시는 하나님의 자유가 그 자체로 의의 근거다. 자비는 정의상 빚진 것이 아니다. 빚진 것이라면 그것은 임금이다. 그러나 이것은 자비다. <span class="vr" data-ref="Rom 9:16">16절</span>은 언어가 허락하는 가장 단호한 말로 선언한다: "원하는 자로 말미암음도 아니요 달음박질하는 자로 말미암음도 아니요 오직 긍휼히 여기시는 하나님으로 말미암음이니라."</p>
+    <p>그리고 바로 (<span class="vr" data-ref="Rom 9:17-18">17-18절</span>). 하나님이 그를 세우신 목적은 권능을 나타내기 위함이다. 결론: "원하시는 자를 긍휼히 여기시고 원하시는 자를 완악하게 하시느니라." 하나님이 능동적 주체이시다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>두 번째 반론: 왜 여전히 허물을 찾으시는가? &middot; 19-23절</h2>
+    <p>핵심이다. 이 반론 (<span class="vr" data-ref="Rom 9:19">19절</span>)은 바울이 개혁신학이 말하는 그대로를 가르칠 때만 나온다.</p>
+    <p>바울이 "하나님이 믿음을 미리 보시고 선택하신다"는 뜻이었다면, 아무도 "왜 여전히 허물을 찾으시는가?"라고 묻지 않았을 것이다. 이 반론은 무조건적 선택과 주권적 강퍅케 하심에 대해서만 의미가 있다. 반론의 존재 자체가 바울이 실제로 말하는 것을 증명한다.</p>
+    <p>내가 만들어낸 것이 아니다. 바울도, 칼빈도, 스펄전도, 에드워즈도, 맥아더도, 폴 워셔도 아니다. 바울은 구약을 소리 내어 읽고 있다. 로마서 9장 자체가 출애굽기 33장의 해설이다. 이것은 성경 속 하나님의 성품이다.</p>
+    <p>바울의 응답 (<span class="vr" data-ref="Rom 9:20-21">20-21절</span>)은 <span class="vr" data-ref="Isa 29:16">이사야 29:16</span>과 <span class="vr" data-ref="Jer 18:6">예레미야 18장</span>의 토기장이와 진흙 비유를 가져온다. <em>"사람아, 네가 누구이기에 하나님께 반문하느냐?"</em> 반지성적인 것이 아니다. 피조물의 위치를 확립하는 것이다.</p>
+    <div class="pullquote"><p>"이 사람아, 네가 누구이기에 하나님께 반문하느냐? 지음을 받은 물건이 지은 자에게 어찌 나를 이같이 만들었느냐 말하겠느냐?"</p><cite><span class="vr" data-ref="Rom 9:20-21">로마서 9:20</span> (ESV)</cite></div>
+    <p><span class="vr" data-ref="Rom 9:22-23">22-23절</span>이 핵심이다. 하나님은 진노의 그릇들을 많은 오래 참음으로 견디신다. 자비의 그릇들에게 자신의 영광의 풍성함을 알리기 위해서다. 하나님은 우리 모두를 진노의 그릇으로 만들 권리가 있으셨다. 자비를 빚지지 않으신다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>공평함을 원하지 마라</h2>
+    <p>로마서 9장의 반복되는 주제: "공평한가? 공평한가? 공평한가?"</p>
+    <p>바울의 대답은 충격적이다. 공평함을 원하지 마라. 하나님이 모든 사람에게 공평하게, 받아 마땅한 것을 주신다면, 인류 역사의 모든 사람이 지옥에 간다. 하나님은 의로우시고 우리는 죄인이니까. 의로운 재판관 앞에서 죄인은 어디로 가는가? 그것이 공평함이다.</p>
+    <p>자비는 공평함에 대한 것이 아니다. 네가 번 것이 아니다. 하나님이 빚진 것이 아니다.</p>
+    <p>십자가가 가장 명확한 그림이다. 십자가에 공평함이 어디 있는가? 그리스도는 죽을 자격이 없었다. 너는 살 자격이 없었다. 십자가 위에서 보이는 것은 자비, 자비, 자비, 그리고 동시에 정의다. 하나님이 의로우시기에 단순한 자비만으로는 안 됐다. 죄는 속죄되어야 했다. 그래서 그리스도가 우리 대신 죽으셨다. 공평함이 아니다. 그보다 무한히 더 나은 것이다.</p>
+    <div class="pullquote"><p>"만군의 여호와께서 우리에게 씨를 남겨 두지 아니하셨더라면 우리가 소돔 같이 되고 고모라 같았으리로다."</p><cite><span class="vr" data-ref="Rom 9:29">이사야 1:9 / 로마서 9:29</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>성경적 확인 &middot; 24-29절</h2>
+    <p>바울은 모든 것을 구약에 근거한다. <span class="vr" data-ref="Hos 2:23">호세아 2:23</span>과 <span class="vr" data-ref="Hos 1:10">1:10</span>을 인용한다: 하나님의 백성이 아니던 자들이 "살아계신 하나님의 아들"이 된다. 이방인의 포함. 처음부터의 패턴이다. 하나님의 구원 계획은 유대인만을 위한 것이 아니었다. 온 세상을 위한 것이었다.</p>
+    <p><span class="vr" data-ref="Isa 10:22-23">이사야 10:22-23</span>: 이스라엘의 남은 자만 구원받는다 (<span class="vr" data-ref="Rom 9:27-28">27-28절</span>). 그리고 <span class="vr" data-ref="Isa 1:9">이사야 1:9</span>인 <span class="vr" data-ref="Rom 9:29">29절</span>: <em>"만군의 여호와께서 우리에게 씨를 남겨 두지 아니하셨더라면 우리가 소돔 같이 되고 고모라 같았으리로다."</em> 그것이 공평함이다. 하나님이 이스라엘에게 받아 마땅한 것을 주셨다면 완전히 사라졌을 것이다. 남아있다는 사실 자체가 순전히 자비다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>이스라엘의 걸려 넘어짐 &middot; 30-33절</h2>
+    <p>바울은 이스라엘의 실패를 진단하며 마무리한다 (<span class="vr" data-ref="Rom 9:30-33">30-33절</span>). 이방인들은 믿음으로 의를 얻었다. 이스라엘은 율법의 행위로 추구하다가 걸려 넘어졌다. 그 걸림돌이 그리스도다.</p>
+    <p><span class="vr" data-ref="Isa 28:16">이사야 28:16</span>과 <span class="vr" data-ref="Isa 8:14">8:14</span>를 인용한다. 율법의 행위로는 아무도 구원받지 못한다. 믿음으로, 은혜로, 그리스도 예수 안에서: 그것이 구원의 방법이다.</p>
+    <p>여기서 바울은 인간의 책임으로 전환한다. 자기 말과 모순되지 않는다. 인간의 책임과 하나님의 주권적 선택은 대립하는 진리가 아니다. 같은 현실의 두 층위, 동전의 양면이다. 하나님은 목적과 수단 모두를 정하셨다. 그 수단 안에 진정한 인간의 선택이 있고, 그 선택에 대해 진정으로 책임을 진다. 로봇적이지 않다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>앞을 바라보며: 로마서 10-11장</h2>
+    <p>로마서 9장은 독립적으로 서지 않는다. 10장(인간의 책임, 복음의 보편적 제안)과 11장(이스라엘의 미래 소망)으로 흐른다. 9장을 10-11장에서 분리할 수 없다. 그러나 10-11장을 사용해서 9장이 분명히 가르치는 것을 무효화할 수도 없다.</p>
+    <div class="stars">* * *</div>
+
+    <h2>개인적인 말</h2>
+    <p>나는 베트남의 교회에서 자랐다. 거기서의 주제는 간단했다: 네가 하나님을 선택한다. 하나님이 기회를 주신다. 초대하신다. 그러나 받아들이는 것은 네 몫이다. 네가 최종 결정권을 가진다. "하나님을 마음에 초대하라." 그것은 나를 결정자로 만들었다.</p>
+    <p>하나님께 나아와 복종하는 것 자체는 틀리지 않다. 그러나 순서가 틀렸다. 나를 결정적 요소로 만들었다. 내 선택이 결정적인 것이라고 했다.</p>
+    <p>그러다 <span class="vr" data-ref="Eph 1:4-5">에베소서 1장</span>을 읽었다. 하나님이 믿음 안에서 모든 자를 예정하셨다는 것을 보았다. 새로웠다. 첫 반응: 공평하지 않다. 하나님이 선택하신다면, 선택받지 못한 자들은 기회조차 없지 않은가.</p>
+    <p>그러나 계속 읽어가며 로마서 9장에 도달했다. 이 장이 나를 확신시켰다. 하나님, 주권자이십니다. 내 구원은 내가 주님을 선택했기 때문이 아닙니다. 주님이 사랑 안에서 우리에게 자비를 베푸시기로 결정하셨기 때문입니다. 그것이 전부입니다.</p>
+    <div class="pullquote"><p>"우리가 사랑함은 그가 먼저 우리를 사랑하셨음이라."</p><cite><span class="vr" data-ref="1 Jn 4:19">요한일서 4:19</span> (ESV)</cite></div>
+    <div class="stars">* * *</div>
+
+    <h2>이 진리로 무엇을 하는가?</h2>
+    <p>매일 아침 만들어낼 수 없는 감사함으로 일어난다. 내가 한 것이 아니니까. 내가 한 어떤 것도 내 구원을 번 것이 아니니까. 순전히 하나님이 자비 속에서 나를 선택하셨기 때문이다. 세상 모든 사람 중에 나에게 자비를 베푸셨다. 얼마나 놀라운 일인지 아는가?</p>
+    <p>다 파악할 수 없다. 다 소진할 수 없다. 끝에 도달할 수 없다. 그러나 하나님이 나를 선택하셨다. 그것을 안다. 그것을 사랑한다.</p>
+    <p>그리스도인이라면, 감사하라. 깊이, 흔들림 없이 감사하라. 죽었다가 살린 자의 감사다. 토기장이가 진노로 빚을 권리가 있었는데 대신 자비로 빚은 자의 감사다.</p>
+    <p>하나님이 선택하셨기에 굳게 설 수 있다. <span class="vr" data-ref="Phil 1:6">빌립보서 1:6</span>이 분명히 말한다: 너희 안에서 선한 일을 시작하신 이가 완성하실 것이다. 시작한 것을 끝내실 것이다. 약속이다.</p>
+    <div class="pullquote"><p>"너희 안에서 착한 일을 시작하신 이가 그리스도 예수의 날까지 이루실 줄을 우리는 확신하노라."</p><cite><span class="vr" data-ref="Phil 1:6">빌립보서 1:6</span> (ESV)</cite></div>
+    <p>이 진리에서 로마서 8장을 아래에서 위로 읽어라. 하나님이 너를 사랑하셨고, <span class="vr" data-ref="Rom 8:38-39">그 사랑에서 아무것도 너를 떼어놓을 수 없다</span>. <span class="vr" data-ref="Rom 8:31">하나님이 너를 위하시면 누가 대적하겠는가?</span> <span class="vr" data-ref="Rom 8:33">누가 하나님의 택하신 자를 고발하겠는가?</span></p>
+    <p>예정하신 자를 부르셨다. 부르신 자를 의롭다 하셨다. 의롭다 하신 자를 영화롭게 하셨다 (<span class="vr" data-ref="Rom 8:29-30">로마서 8:29-30</span>). 과거형. 하나님의 마음 속에서 이미 완료된 일이다. 그 큰 사랑 때문에 <span class="vr" data-ref="Rom 8:28">모든 것이 합력하여 선을 이룬다</span>. 하나님을 사랑하는 자들에게.</p>
+    <p>이것이 기초다. 네가 얼마나 꽉 붙잡느냐에 달린 흔들리는 소망이 아니다. 하나님의 주권 그 자체에 놓인 견고한 기초다. 하나님이 주권자이시기에 네가 실패할 수 없다. 구원하신다면 끝까지 하실 것이다.</p>
+    <p>그리고 이것이, 친구야, 내가 가져본 가장 큰 위로다.</p>
+  </div>
+
+  <footer class="post-footer">
+    <p class="sdg">Soli Deo Gloria</p>
+    <a href="../index.html" class="back-link">Back to all posts</a>
+  </footer>
+</div>
+
+<script>
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+});
+
+const ESV = {
+  "Rom 9:1-3":"I am speaking the truth in Christ—I am not lying; my conscience bears me witness in the Holy Spirit—that I have great sorrow and unceasing anguish in my heart. For I could wish that I myself were accursed and cut off from Christ for the sake of my brothers, my kinsmen according to the flesh.",
+  "Rom 9:4-5":"They are Israelites, and to them belong the adoption, the glory, the covenants, the giving of the law, the worship, and the promises. To them belong the patriarchs, and from their race, according to the flesh, is the Christ, who is God over all, blessed forever. Amen.",
+  "Rom 9:6":"But it is not as though the word of God has failed. For not all who are descended from Israel belong to Israel.",
+  "Rom 9:7-9":"And not all are children of Abraham because they are his offspring, but 'Through Isaac shall your offspring be named.' This means that it is not the children of the flesh who are the children of God, but the children of the promise are counted as offspring.",
+  "Rom 9:10-13":"And not only so, but also when Rebekah had conceived children by one man, our forefather Isaac, though they were not yet born and had done nothing either good or bad—in order that God's purpose of election might continue, not because of works but because of him who calls—she was told, 'The older will serve the younger.' As it is written, 'Jacob I loved, but Esau I hated.'",
+  "Rom 9:12":"She was told, 'The older will serve the younger.'",
+  "Rom 9:14":"What shall we say then? Is there injustice on God's part? By no means!",
+  "Rom 9:16":"So then it depends not on human will or exertion, but on God, who has mercy.",
+  "Rom 9:17-18":"For the Scripture says to Pharaoh, 'For this very purpose I have raised you up, that I might show my power in you, and that my name might be proclaimed in all the earth.' So then he has mercy on whomever he wills, and he hardens whomever he wills.",
+  "Rom 9:19":"You will say to me then, 'Why does he still find fault? For who can resist his will?'",
+  "Rom 9:20-21":"But who are you, O man, to answer back to God? Will what is molded say to its molder, 'Why have you made me like this?' Has the potter no right over the clay, to make out of the same lump one vessel for honorable use and another for dishonorable use?",
+  "Rom 9:22-23":"What if God, desiring to show his wrath and to make known his power, has endured with much patience vessels of wrath prepared for destruction, in order to make known the riches of his glory for vessels of mercy, which he has prepared beforehand for glory.",
+  "Rom 9:27-28":"And Isaiah cries out concerning Israel: 'Though the number of the sons of Israel be as the sand of the sea, only a remnant of them will be saved, for the Lord will carry out his sentence upon the earth fully and without delay.'",
+  "Rom 9:29":"And as Isaiah predicted, 'If the Lord of hosts had not left us offspring, we would have been like Sodom and become like Gomorrah.'",
+  "Rom 9:30-33":"What shall we say, then? That Gentiles who did not pursue righteousness have attained it, that is, a righteousness that is by faith; but that Israel who pursued a law that would lead to righteousness did not succeed in reaching that law. Why? Because they did not pursue it by faith, but as if it were based on works. They have stumbled over the stumbling stone.",
+  "Ex 33:19":"And he said, 'I will make all my goodness pass before you and will proclaim before you my name, The Lord. And I will be gracious to whom I will be gracious, and will show mercy on whom I will show mercy.'",
+  "Isa 29:16":"You turn things upside down! Shall the potter be regarded as the clay, that the thing made should say of its maker, 'He did not make me'; or the thing formed say of him who formed it, 'He has no understanding'?",
+  "Jer 18:6":"'O house of Israel, can I not do with you as this potter has done? declares the Lord. Behold, like the clay in the potter's hand, so are you in my hand, O house of Israel.'",
+  "Hos 2:23":"And I will sow her for myself in the land. And I will have mercy on No Mercy, and I will say to Not My People, 'You are my people'; and he shall say, 'You are my God.'",
+  "Hos 1:10":"Yet the number of the children of Israel shall be like the sand of the sea, which cannot be measured or numbered. And in the place where it was said to them, 'You are not my people,' it shall be said to them, 'Children of the living God.'",
+  "Isa 10:22-23":"For though your people Israel be as the sand of the sea, only a remnant of them will return. Destruction is decreed, overflowing with righteousness.",
+  "Isa 1:9":"If the Lord of hosts had not left us a few survivors, we should have been like Sodom, and become like Gomorrah.",
+  "Isa 28:16":"Therefore thus says the Lord God, 'Behold, I am the one who has laid as a foundation in Zion, a stone, a tested stone, a precious cornerstone, of a sure foundation: Whoever believes will not be in haste.'",
+  "Isa 8:14":"And he will become a sanctuary and a stone of offense and a rock of stumbling to both houses of Israel, a trap and a snare to the inhabitants of Jerusalem.",
+  "Mal 1:2-3":"'I have loved you,' says the Lord. But you say, 'How have you loved us?' 'Is not Esau Jacob's brother?' declares the Lord. 'Yet I have loved Jacob but Esau I have hated.'",
+  "Eph 1:4-5":"Even as he chose us in him before the foundation of the world, that we should be holy and blameless before him. In love he predestined us for adoption to himself as sons through Jesus Christ, according to the purpose of his will.",
+  "Phil 1:6":"And I am sure of this, that he who began a good work in you will bring it to completion at the day of Jesus Christ.",
+  "Rom 8:28":"And we know that for those who love God all things work together for good, for those who are called according to his purpose.",
+  "Rom 8:29-30":"For those whom he foreknew he also predestined to be conformed to the image of his Son. And those whom he predestined he also called, and those whom he called he also justified, and those whom he justified he also glorified.",
+  "Rom 8:31":"What then shall we say to these things? If God is for us, who can be against us?",
+  "Rom 8:33":"Who shall bring any charge against God's elect? It is God who justifies.",
+  "Rom 8:38-39":"For I am sure that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor powers, nor height nor depth, nor anything else in all creation, will be able to separate us from the love of God in Christ Jesus our Lord.",
+  "1 Jn 4:19":"We love because he first loved us."
+};
+
+const tip = document.getElementById('tip');
+const tipRef = document.getElementById('tip-ref');
+const tipText = document.getElementById('tip-text');
+let hideTO;
+
+document.querySelectorAll('.vr').forEach(el => {
+  const show = () => {
+    clearTimeout(hideTO);
+    const ref = el.dataset.ref;
+    const text = ESV[ref];
+    if (!text) return;
+    tipRef.textContent = ref + ' (ESV)';
+    tipText.textContent = text;
+    const r = el.getBoundingClientRect();
+    let left = Math.min(Math.max(r.left + r.width/2, 170), window.innerWidth - 170);
+    tip.style.top = (r.bottom + 8) + 'px';
+    tip.style.left = left + 'px';
+    tip.style.transform = 'translateX(-50%)';
+    tip.style.display = 'block';
+  };
+  const hide = () => { hideTO = setTimeout(() => tip.style.display = 'none', 200); };
+  el.addEventListener('mouseenter', show);
+  el.addEventListener('mouseleave', hide);
+  el.addEventListener('click', e => { tip.style.display === 'block' ? tip.style.display = 'none' : show(); e.stopPropagation(); });
+});
+document.addEventListener('click', () => tip.style.display = 'none');
+
+function setLang(lang) {
+  const kr = lang === 'kr';
+  ['en','kr'].forEach(l => {
+    const active = (l === lang);
+    document.getElementById('body-' + l).classList.toggle('active', active);
+    document.getElementById('title-' + l).style.display = active ? '' : 'none';
+    document.getElementById('sub-' + l).style.display = active ? '' : 'none';
+    document.getElementById('tag-' + l).style.display = active ? '' : 'none';
+    document.getElementById('btn-' + l).classList.toggle('active', active);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
