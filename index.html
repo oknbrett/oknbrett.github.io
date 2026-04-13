@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prone to Wander</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --faint: #e8e8e8;
+      --red: #c0392b;
+      --serif: 'Source Serif 4', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 60px;
+      border-bottom: 1px solid var(--faint);
+      position: sticky; top: 0; background: white; z-index: 100;
+    }
+    .nav-brand {
+      font-family: var(--sans); font-size: 0.95rem; font-weight: 600;
+      letter-spacing: -0.01em; color: var(--text);
+    }
+    .nav-brand span { color: var(--red); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; color: var(--muted); font-weight: 400; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* FEATURED */
+    .featured {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 480px; border-bottom: 1px solid var(--faint);
+    }
+    .featured-img {
+      background: #1a1a1a;
+      background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900&q=80');
+      background-size: cover; background-position: center;
+    }
+    .featured-body {
+      padding: 4rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .featured-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
+    }
+    .featured-title {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 1.25rem;
+    }
+    .featured-excerpt {
+      font-family: var(--serif); font-size: 1rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 2rem; max-width: 460px;
+    }
+    .featured-meta {
+      font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
+    }
+    .featured-meta .author { font-weight: 500; color: var(--text); }
+
+    /* RECENT */
+    .recent-section { max-width: 1200px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
+    .recent-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--faint);
+    }
+    .recent-label { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .recent-more { font-size: 0.78rem; color: var(--muted); }
+    .recent-more:hover { color: var(--text); }
+
+    .post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+
+    .post-card { cursor: pointer; }
+    .post-card-img {
+      width: 100%; aspect-ratio: 16/9; background: #e8e4dc;
+      margin-bottom: 1rem; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .post-card-img-inner {
+      width: 100%; height: 100%; background: #1a1a1a;
+      transition: transform 0.3s ease;
+    }
+    .post-card:hover .post-card-img-inner { transform: scale(1.02); }
+    .post-card-tag { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .post-card-title {
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 600;
+      line-height: 1.3; letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 0.5rem; transition: color 0.15s;
+    }
+    .post-card:hover .post-card-title { color: var(--red); }
+    .post-card-excerpt { font-size: 0.85rem; color: var(--muted); line-height: 1.65; }
+    .post-card-date { font-size: 0.72rem; color: var(--muted); margin-top: 0.75rem; }
+
+    /* ABOUT */
+    .about-section {
+      background: #f9f8f6; border-top: 1px solid var(--faint);
+      padding: 5rem 2.5rem;
+    }
+    .about-inner { max-width: 680px; margin: 0 auto; }
+    .about-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 1.5rem; }
+    .about-inner h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+    .about-body { font-family: var(--serif); font-size: 1.05rem; line-height: 1.85; color: #3a3a3a; }
+    .about-body p + p { margin-top: 1.1rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; padding: 2.5rem; border-top: 1px solid var(--faint);
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em;
+    }
+    footer span { color: var(--text); font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .featured { grid-template-columns: 1fr; }
+      .featured-img { min-height: 240px; }
+      .featured-body { padding: 2.5rem 1.5rem; }
+      nav { padding: 0 1.25rem; }
+      .recent-section { padding: 2.5rem 1.25rem 4rem; }
+      .about-section { padding: 3.5rem 1.25rem; }
+      .post-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">Prone<span>to</span>Wander</a>
+  <ul class="nav-links">
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- Featured post injected by JS -->
+<div id="featured-container"></div>
+
+<section class="recent-section" id="writing">
+  <div class="recent-header">
+    <span class="recent-label">Recent</span>
+  </div>
+  <div class="post-grid" id="post-grid"></div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <p class="about-label">About</p>
+    <h2>Prone to Wander</h2>
+    <div class="about-body">
+      <p>I am Ong Khoi Nguyen. Some of you might know me as Chip, some of you as Brett. I am Vietnamese, born and raised in Da Nang, and currently based in the Netherlands.</p>
+      <p>I grew up in an evangelical church in Vietnam. My faith is not a story of a sudden 90-degree turn. It was gradual, a slow transformation that God worked in me over years, and it was really when I moved to the Netherlands that I truly found what it means to be a Christian. I cannot pinpoint the exact moment, but I know it happened.</p>
+      <p>What I find most compelling is learning who God actually is. People often think theology is for missionaries, church workers, or seminary students. But theology simply means the knowledge of God. Theo is God, logos is to know. And without knowing who God is, you cannot properly worship Him, because theology and doxology go hand in hand. Those who worship God must worship in spirit and in truth.</p>
+      <p>Where I come from, theology was simple and minimal. I understand why, but I do not think it should stay that way. This blog is my attempt to bring theology to you through the lens of the church fathers and preachers throughout history, but most importantly, sola scriptura. Everything grounded in Scripture alone. I want to make it accessible, not overwhelming.</p>
+      <p>The name comes from Come Thou Fount. "Prone to wander, Lord I feel it." That line resonates with me more than any other. It felt like the honest place to start.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Prone to Wander</span> &nbsp;&middot;&nbsp; Soli Deo Gloria
+</footer>
+
+<script src="posts.js"></script>
+<script>
+  // Card background colors per tag
+  const tagColors = {
+    'Exegesis': '#2c2c2c',
+    'Article': '#3b2a1a',
+    'Reflection': '#1a2a2c',
+  };
+
+  // Render featured post
+  const featured = POSTS.find(p => p.featured) || POSTS[0];
+  document.getElementById('featured-container').innerHTML = `
+    <a href="${featured.slug}" style="display:block;">
+      <div class="featured">
+        <div class="featured-img"></div>
+        <div class="featured-body">
+          <p class="featured-tag">${featured.tag}</p>
+          <h2 class="featured-title">${featured.title}</h2>
+          <p class="featured-excerpt">${featured.excerpt}</p>
+          <div class="featured-meta">
+            <span class="author">Chip</span>
+            <span>&middot;</span>
+            <span>${featured.date}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  `;
+
+  // Render post grid (all posts except featured)
+  const grid = document.getElementById('post-grid');
+  POSTS.forEach(post => {
+    const bg = tagColors[post.tag] || '#2c2c2c';
+    grid.innerHTML += `
+      <a href="${post.slug}" class="post-card">
+        <div class="post-card-img">
+          <div class="post-card-img-inner" style="background:${bg};"></div>
+        </div>
+        <p class="post-card-tag">${post.tag}</p>
+        <h3 class="post-card-title">${post.title}</h3>
+        <p class="post-card-excerpt">${post.excerpt}</p>
+        <p class="post-card-date">${post.date}</p>
+      </a>
+    `;
+  });
+</script>
+
+</body>
+</html>
